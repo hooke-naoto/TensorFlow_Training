@@ -25,3 +25,9 @@ print('-------- model.fit --------')
 model.fit(train_images, train_labels, epochs=epochs_num, batch_size=batch_size_num)
 print('-------- model.evaluate --------')
 test_loss, test_acc = model.evaluate(test_images, test_labels)
+
+# Show images
+digit = train_images[4]
+import matplotlib.pyplot as plt
+plt.imshow(digit, cmap=plt.cm.binary)
+plt.show()
