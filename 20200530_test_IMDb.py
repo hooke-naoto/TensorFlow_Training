@@ -58,58 +58,20 @@ print('NN creation...')
 model = tf.keras.models.Sequential([
   tf.keras.layers.Dense(16, activation='relu', input_shape=(10000,)),
   tf.keras.layers.Dense(16, activation='relu'),
+  # tf.keras.layers.Dense(16, activation='relu'),
   tf.keras.layers.Dense(1, activation='sigmoid')
   ])
 # Model compile
 model.compile(
     optimizer=tf.keras.optimizers.RMSprop(lr=0.001),
-    loss=tf.keras.losses.binary_crossentropy,
+    # loss=tf.keras.losses.binary_crossentropy,
+    loss=tf.keras.losses.mse,
     metrics=['accuracy'])
 # model.compile(
 #     optimizer='rmsprop',
 #     loss='binary_crossentropy',
 #     metrics=['accuracy'])
 ######## NN creation ######## END
-
-######## NN trial ########
-print('NN trial...')
-# Separate 10000 data for validation.
-x_train_val = x_train[:10000]
-x_train_partial = x_train[10000:]
-y_train_val = y_train[:10000]
-y_train_partial = y_train[10000:]
-# Training
-model_fitted = model.fit(
-    x_train_partial,
-    y_train_partial,
-    epochs=20,
-    batch_size=512,
-    validation_data=(x_train_val, y_train_val)
-    )
-# Export results
-history_dict = model_fitted.history
-# print(history_dict.keys())    # dict_keys(['loss', 'accuracy', 'val_loss', 'val_accuracy'])
-# Graph
-loss_values = history_dict['loss']
-loss_values_val = history_dict['val_loss']
-epochs = range(1, len(loss_values) + 1)
-plt.plot(epochs, loss_values, 'bo', label='Training loss')    # 'bo': blue dot
-plt.plot(epochs, loss_values_val, 'b', label='Validation loss')    # 'b': solid blue line
-plt.title('Training loss & Validation loss')
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
-plt.legend()
-plt.show()
-acc = history_dict['accuracy']
-acc_val = history_dict['val_accuracy']
-plt.plot(epochs, acc, 'bo', label='Training acc')
-plt.plot(epochs, acc_val, 'b', label='Validation acc')    # 'b': solid blue line
-plt.title('Training accuracy & Validation accuracy')
-plt.xlabel('Epochs')
-plt.ylabel('Accuracy')
-plt.legend()
-plt.show()
-######## NN trial ######## END
 
 ######## NN training ########
 print('NN training...')
@@ -120,9 +82,48 @@ model.fit(x_train, y_train, epochs=4, batch_size=512)
 ######## NN results ########
 print('NN results...')
 # Results
-print(model.evaluate(x_test, y_test))
-print(model.predict(x_test))
+model.evaluate(x_test, y_test)
+# print(model.predict(x_test))
 ######## NN results ######## END
 
+######## NN trial ########
+# print('NN trial...')
+# # Separate 10000 data for validation.
+# x_train_val = x_train[:10000]
+# x_train_partial = x_train[10000:]
+# y_train_val = y_train[:10000]
+# y_train_partial = y_train[10000:]
+# # Training
+# model_fitted = model.fit(
+#     x_train_partial,
+#     y_train_partial,
+#     epochs=20,
+#     batch_size=512,
+#     validation_data=(x_train_val, y_train_val)
+#     )
+# # Export results
+# history_dict = model_fitted.history
+# # print(history_dict.keys())    # dict_keys(['loss', 'accuracy', 'val_loss', 'val_accuracy'])
+# # Graph
+# loss_values = history_dict['loss']
+# loss_values_val = history_dict['val_loss']
+# epochs = range(1, len(loss_values) + 1)
+# plt.plot(epochs, loss_values, 'bo', label='Training loss')    # 'bo': blue dot
+# plt.plot(epochs, loss_values_val, 'b', label='Validation loss')    # 'b': solid blue line
+# plt.title('Training loss & Validation loss')
+# plt.xlabel('Epochs')
+# plt.ylabel('Loss')
+# plt.legend()
+# plt.show()
+# acc = history_dict['accuracy']
+# acc_val = history_dict['val_accuracy']
+# plt.plot(epochs, acc, 'bo', label='Training acc')
+# plt.plot(epochs, acc_val, 'b', label='Validation acc')    # 'b': solid blue line
+# plt.title('Training accuracy & Validation accuracy')
+# plt.xlabel('Epochs')
+# plt.ylabel('Accuracy')
+# plt.legend()
+# plt.show()
+######## NN trial ######## END
 
 print('END!')
