@@ -56,16 +56,16 @@ print('NN creation...')
 ## 2 layers which have 16 hidden units. [ReLU]
 ## Last layer outputs scalar which outputs the probability of positive or negative. [Sigmoid]
 model = tf.keras.models.Sequential([
-  tf.keras.layers.Dense(16, activation='relu', input_shape=(10000,)),
-  tf.keras.layers.Dense(16, activation='relu'),
+  tf.keras.layers.Dense(64, activation='relu', input_shape=(10000,)),
+  tf.keras.layers.Dense(64, activation='relu'),
   # tf.keras.layers.Dense(16, activation='relu'),
   tf.keras.layers.Dense(1, activation='sigmoid')
   ])
 # Model compile
 model.compile(
     optimizer=tf.keras.optimizers.RMSprop(lr=0.001),
-    # loss=tf.keras.losses.binary_crossentropy,
-    loss=tf.keras.losses.mse,
+    loss=tf.keras.losses.binary_crossentropy,
+    # loss=tf.keras.losses.mse,
     metrics=['accuracy'])
 # model.compile(
 #     optimizer='rmsprop',
