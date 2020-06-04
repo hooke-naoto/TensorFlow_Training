@@ -25,10 +25,10 @@ reverse_word_index = dict(
                         )
 # Decode the first review in train data.
 ## Need offset as 3 for system reserved 3 words: pudding, sequence start, unknown
-decode_review = ' '.join(
-                            [reverse_word_index.get(i - 3, '?') for i in train_data[0]]
-                            )
-# Show decoded review.
+# # Show decoded review.
+# decode_review = ' '.join(
+#                             [reverse_word_index.get(i - 3, '?') for i in train_data[0]]
+#                             )
 # print(decode_review)
 ######## Data organization ######## END
 
