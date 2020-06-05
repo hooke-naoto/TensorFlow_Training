@@ -11,6 +11,7 @@ print('Data loading...')
 # Load dataset
 ## num_words ... Specify frequent words, remove other words.
 (train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=10000)
+# print(train_labels)    # [1 0 0 ... 0 1 0] ... Positive or negative
 ######## Data loading ######## END
 
 ######## Data organization ########
