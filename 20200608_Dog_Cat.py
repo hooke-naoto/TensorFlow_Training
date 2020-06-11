@@ -8,10 +8,12 @@ import matplotlib.pyplot as plt
 
 ######## Data loading ########
 print('Data loading...')
+# For Windows Desktop PC
 dir_data_original = '/Users/hooke/Downloads/dogs-vs-cats/train'
 dir_data_small = '/Users/hooke/Downloads/dogs-vs-cats_small'
-dir_data_original = r'C:\Users\naoto\Downloads\dogs-vs-cats\train'
-dir_data_small = r'C:\Users\naoto\Downloads\dogs-vs-cats_small'
+# For MacBook Pro
+# dir_data_original = r'C:\Users\naoto\Downloads\dogs-vs-cats\train'
+# dir_data_small = r'C:\Users\naoto\Downloads\dogs-vs-cats_small'
 dir_train = os.path.join(dir_data_small, 'train')
 dir_validation = os.path.join(dir_data_small, 'validation')
 dir_test = os.path.join(dir_data_small, 'test')
