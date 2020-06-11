@@ -158,4 +158,5 @@ plt.plot(epochs, loss_val, 'b', label='Validation loss')
 plt.title('Training loss & Validation loss')
 plt.legend()
 plt.figure()
+plt.show()
 ######## NN training ######## END
