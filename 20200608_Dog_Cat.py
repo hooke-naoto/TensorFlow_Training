@@ -10,6 +10,8 @@ import matplotlib.pyplot as plt
 print('Data loading...')
 dir_data_original = '/Users/hooke/Downloads/dogs-vs-cats/train'
 dir_data_small = '/Users/hooke/Downloads/dogs-vs-cats_small'
+dir_data_original = r'C:\Users\naoto\Downloads\dogs-vs-cats\train'
+dir_data_small = r'C:\Users\naoto\Downloads\dogs-vs-cats_small'
 dir_train = os.path.join(dir_data_small, 'train')
 dir_validation = os.path.join(dir_data_small, 'validation')
 dir_test = os.path.join(dir_data_small, 'test')
@@ -19,16 +21,17 @@ dir_validation_cats = os.path.join(dir_validation, 'cats')
 dir_validation_dogs = os.path.join(dir_validation, 'dogs')
 dir_test_cats = os.path.join(dir_test, 'cats')
 dir_test_dogs = os.path.join(dir_test, 'dogs')
-# os.mkdir(dir_data_small)
-# os.mkdir(dir_train)
-# os.mkdir(dir_validation)
-# os.mkdir(dir_test)
-# os.mkdir(dir_train_cats)
-# os.mkdir(dir_train_dogs)
-# os.mkdir(dir_validation_cats)
-# os.mkdir(dir_validation_dogs)
-# os.mkdir(dir_test_cats)
-# os.mkdir(dir_test_dogs)
+if False == os.path.exists(dir_data_small):
+    os.mkdir(dir_data_small)
+    os.mkdir(dir_train)
+    os.mkdir(dir_validation)
+    os.mkdir(dir_test)
+    os.mkdir(dir_train_cats)
+    os.mkdir(dir_train_dogs)
+    os.mkdir(dir_validation_cats)
+    os.mkdir(dir_validation_dogs)
+    os.mkdir(dir_test_cats)
+    os.mkdir(dir_test_dogs)
 fnames = ['cat.{}.jpg'.format(i) for i in range(1000)]
 for fname in fnames:
     src = os.path.join(dir_data_original, fname)
@@ -139,8 +142,9 @@ history = model.fit_generator(
     validation_steps=50
     )
 model.save('dogs_and_cats_small_1.h5')    # Save as h5-file.
-acc = history.history['accuracy']
-acc_val = history.history['val_accuracy']
+# print(history.history)    # Check keys of "history". (e.g. acc? accuracy?)
+acc = history.history['acc']
+acc_val = history.history['val_acc']
 loss = history.history['loss']
 loss_val = history.history['val_loss']
 epochs = range(1, len(acc) + 1)
