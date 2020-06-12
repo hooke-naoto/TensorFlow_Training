@@ -8,12 +8,12 @@ import matplotlib.pyplot as plt
 
 ######## Data loading ########
 print('Data loading...')
-# For Windows Desktop PC
-dir_data_original = '/Users/hooke/Downloads/dogs-vs-cats/train'
-dir_data_small = '/Users/hooke/Downloads/dogs-vs-cats_small'
 # For MacBook Pro
-# dir_data_original = r'C:\Users\naoto\Downloads\dogs-vs-cats\train'
-# dir_data_small = r'C:\Users\naoto\Downloads\dogs-vs-cats_small'
+# dir_data_original = '/Users/hooke/Downloads/dogs-vs-cats/train'
+# dir_data_small = '/Users/hooke/Downloads/dogs-vs-cats_small'
+# For Windows Desktop PC
+dir_data_original = r'C:\Users\naoto\Downloads\dogs-vs-cats\train'
+dir_data_small = r'C:\Users\naoto\Downloads\dogs-vs-cats_small'
 dir_train = os.path.join(dir_data_small, 'train')
 dir_validation = os.path.join(dir_data_small, 'validation')
 dir_test = os.path.join(dir_data_small, 'test')
@@ -64,12 +64,12 @@ for fname in fnames:
     src = os.path.join(dir_data_original, fname)
     dst = os.path.join(dir_test_dogs, fname)
     shutil.copyfile(src, dst)
-print('train cat:', len(os.listdir(dir_train_cats)))
-print('train dog:', len(os.listdir(dir_train_dogs)))
-print('validation cat:', len(os.listdir(dir_validation_cats)))
-print('validation dog:', len(os.listdir(dir_validation_dogs)))
-print('test cat:', len(os.listdir(dir_test_cats)))
-print('test dog:', len(os.listdir(dir_test_dogs)))
+# print('train cat:', len(os.listdir(dir_train_cats)))
+# print('train dog:', len(os.listdir(dir_train_dogs)))
+# print('validation cat:', len(os.listdir(dir_validation_cats)))
+# print('validation dog:', len(os.listdir(dir_validation_dogs)))
+# print('test cat:', len(os.listdir(dir_test_cats)))
+# print('test dog:', len(os.listdir(dir_test_dogs)))
 ######## Loading ######## END
 
 ######## NN definition ########
@@ -114,13 +114,13 @@ data_generator_validation = tf.keras.preprocessing.image.ImageDataGenerator(
 generator_train = data_generator_train.flow_from_directory(
     dir_train,
     target_size=(150, 150),
-    batch_size=20,
+    batch_size=32,
     class_mode='binary'    # Binary label for binary_crossentropy
     )
 generator_validation = data_generator_validation.flow_from_directory(
     dir_validation,
     target_size=(150, 150),
-    batch_size=20,
+    batch_size=32,
     class_mode='binary'    # Binary label for binary_crossentropy
     )
 # for data_batch, labels_batch in generator_train:
@@ -139,7 +139,7 @@ print('NN training...')
 history = model.fit_generator(
     generator_train,
     steps_per_epoch=100,    # Step number for 2000 files with 20 batch files.
-    epochs=30,
+    epochs=100,
     validation_data=generator_validation,
     validation_steps=50
     )
