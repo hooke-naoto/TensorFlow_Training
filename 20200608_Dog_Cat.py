@@ -64,12 +64,12 @@ for fname in fnames:
     src = os.path.join(dir_data_original, fname)
     dst = os.path.join(dir_test_dogs, fname)
     shutil.copyfile(src, dst)
-# print('train cat:', len(os.listdir(dir_train_cats)))
-# print('train dog:', len(os.listdir(dir_train_dogs)))
-# print('validation cat:', len(os.listdir(dir_validation_cats)))
-# print('validation dog:', len(os.listdir(dir_validation_dogs)))
-# print('test cat:', len(os.listdir(dir_test_cats)))
-# print('test dog:', len(os.listdir(dir_test_dogs)))
+print('train cat:', len(os.listdir(dir_train_cats)))
+print('train dog:', len(os.listdir(dir_train_dogs)))
+print('validation cat:', len(os.listdir(dir_validation_cats)))
+print('validation dog:', len(os.listdir(dir_validation_dogs)))
+print('test cat:', len(os.listdir(dir_test_cats)))
+print('test dog:', len(os.listdir(dir_test_dogs)))
 ######## Loading ######## END
 
 ######## NN definition ########
@@ -136,7 +136,7 @@ data_gen = tf.keras.preprocessing.image.ImageDataGenerator(
 
 ######## NN training ########
 print('NN training...')
-history = model.fit_generator(
+history = model.fit(
     generator_train,
     steps_per_epoch=100,    # Step number for 2000 files with 20 batch files.
     epochs=100,
