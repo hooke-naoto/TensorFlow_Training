@@ -74,6 +74,7 @@ print('test dog:', len(os.listdir(dir_test_dogs)))
 
 ######## NN definition ########
 print('NN definition...')
+
 model = tf.keras.models.Sequential([
     tf.keras.layers.Conv2D(32, (3, 3), activation='relu', input_shape=(150, 150, 3)),
     tf.keras.layers.MaxPooling2D((2, 2)),
@@ -88,7 +89,22 @@ model = tf.keras.models.Sequential([
     tf.keras.layers.Dense(512, activation='relu'),
     tf.keras.layers.Dense(1, activation='sigmoid'),
     ])
-# model.summary()
+# Outputs will be as below.
+# Input           150, 150, 3
+# conv2d_1        148, 148, 32
+# maxpooling2d_1  74, 74, 64
+# conv2d_2        72, 72, 64
+# maxpooling2d_2  36, 36, 128
+# conv2d_3        34, 34, 64
+# maxpooling2d_3  17, 17, 128
+# conv2d_4        15, 15, 128
+# maxpooling2d_4  7, 7, 128
+# flatten_1       6272 (= 7 x 7 x 128)
+# dense_1         512
+# dense_2         1
+
+model.summary()
+
 model.compile(
     loss='binary_crossentropy',
     optimizer=tf.keras.optimizers.RMSprop(lr=1e-4),
@@ -98,9 +114,10 @@ model.compile(
 
 ######## Data preprocessing ########
 print('Data preprocessing...')
+
 data_generator_train = tf.keras.preprocessing.image.ImageDataGenerator(
-    rescale=1./255,
-    rotation_range=40,
+    rescale=1./255,    # Scaling as real number (NOT integer number).
+    rotation_range=40,    #
     width_shift_range=0.2,
     height_shift_range=0.2,
     shear_range=0.2,
@@ -108,34 +125,41 @@ data_generator_train = tf.keras.preprocessing.image.ImageDataGenerator(
     horizontal_flip=True,
     fill_mode='nearest'
     )
-data_generator_validation = tf.keras.preprocessing.image.ImageDataGenerator(
-    rescale=1./255
-    )
+
 generator_train = data_generator_train.flow_from_directory(
     dir_train,
     target_size=(150, 150),
     batch_size=32,
     class_mode='binary'    # Binary label for binary_crossentropy
     )
+
+data_generator_validation = tf.keras.preprocessing.image.ImageDataGenerator(
+    rescale=1./255
+    )
+
 generator_validation = data_generator_validation.flow_from_directory(
     dir_validation,
     target_size=(150, 150),
     batch_size=32,
     class_mode='binary'    # Binary label for binary_crossentropy
     )
-# for data_batch, labels_batch in generator_train:
-#     print('data batch shape:', data_batch.shape)
-#     print('labels batch shape:', labels_batch.shape)
-#     break
+
+for data_batch, labels_batch in generator_train:
+    print('data batch shape:', data_batch.shape)
+    print('labels batch shape:', labels_batch.shape)
+    break
 ######## Data preprocessing ######## END
 
 ######## Data augmentation ########
+print('Data augmentation...')
+
 data_gen = tf.keras.preprocessing.image.ImageDataGenerator(
     )
 ######## Data augmentation ######## END
 
 ######## NN training ########
 print('NN training...')
+
 history = model.fit(
     generator_train,
     steps_per_epoch=100,    # Step number for 2000 files with 20 batch files.
@@ -143,13 +167,17 @@ history = model.fit(
     validation_data=generator_validation,
     validation_steps=50
     )
+
 model.save('dogs_and_cats_small_1.h5')    # Save as h5-file.
+
 # print(history.history)    # Check keys of "history". (e.g. acc? accuracy?)
+
 acc = history.history['acc']
 acc_val = history.history['val_acc']
 loss = history.history['loss']
 loss_val = history.history['val_loss']
 epochs = range(1, len(acc) + 1)
+
 plt.plot(epochs, acc, 'bo', label='Training accuracy')
 plt.plot(epochs, acc_val, 'b', label='Validation accuracy')
 plt.title('Training accuracy & Validation accuracy')
