@@ -2,6 +2,9 @@
 print('Import...')
 import tensorflow as tf
 import argparse
+# "argparse" enables you to specify parameters when you run this program from command line (Windows: command Prompt, Mac Terminal).
+# In this case, "pochs_num" and "batch_size_num" can be specified for each running.
+# In case of no specifiation from command line, default values are 5 and 128 (you can refer below).
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('--epochs_num', help='Epoch number to fit the model.', required=False, type=int, default=5)
 parser.add_argument('--batch_size_num', help='Batch size to fit the model.', required=False, type=int, default=128)
